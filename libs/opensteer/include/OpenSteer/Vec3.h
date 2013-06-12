@@ -51,7 +51,7 @@
 #define OPENSTEER_VEC3_H
 
 
-#include "OpenSteer/Utilities.h"  // for interpolate, etc.
+#include "Utilities.h"  // for interpolate, etc.
 
 
 namespace OpenSteer {

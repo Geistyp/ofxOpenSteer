@@ -38,16 +38,16 @@
 
 
 // Include OpenSteer::SegmentedPath
-#include "OpenSteer/SegmentedPath.h"
+#include "SegmentedPath.h"
 
 // Include OpenSteer::PointToPathAlikeBaseDataExtractionPolicy
-#include "OpenSteer/QueryPathAlikeBaseDataExtractionPolicies.h"
+#include "QueryPathAlikeBaseDataExtractionPolicies.h"
 
 // Include OpenSteer::Vec3
-#include "OpenSteer/Vec3.h"
+#include "Vec3.h"
 
 // Include OpenSteer::distance
-#include "OpenSteer/Vec3Utilities.h"
+#include "Vec3Utilities.h"
 
 
 

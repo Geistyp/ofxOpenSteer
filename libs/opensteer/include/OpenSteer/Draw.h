@@ -52,10 +52,10 @@
 #define OPENSTEER_DRAW_H
 
 
-#include "OpenSteer/Vec3.h"
-#include "OpenSteer/Color.h"
-#include "OpenSteer/AbstractVehicle.h"
-#include "OpenSteer/Obstacle.h"
+#include "Vec3.h"
+#include "Color.h"
+#include "AbstractVehicle.h"
+#include "Obstacle.h"
 
 
 namespace OpenSteer {

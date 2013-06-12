@@ -73,7 +73,7 @@ FooPlugIn gFooPlugIn;
 #define OPENSTEER_PLUGIN_H
 
 #include <iostream>
-#include "OpenSteer/AbstractVehicle.h"
+#include "AbstractVehicle.h"
 
 
 // ----------------------------------------------------------------------------

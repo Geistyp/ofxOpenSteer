@@ -40,7 +40,7 @@
 #define OPENSTEER_ABSTRACTVEHICLE_H
 
 
-#include "OpenSteer/LocalSpace.h"
+#include "LocalSpace.h"
 
 
 // STL vector containers

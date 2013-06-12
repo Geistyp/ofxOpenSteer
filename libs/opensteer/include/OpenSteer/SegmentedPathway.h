@@ -34,10 +34,10 @@
 
 
 // Include OpenSteer::Pathway
-#include "OpenSteer/Pathway.h"
+#include "Pathway.h"
 
 // Include OpenSteer::size_t
-#include "OpenSteer/StandardTypes.h"
+#include "StandardTypes.h"
 
 
 namespace OpenSteer {

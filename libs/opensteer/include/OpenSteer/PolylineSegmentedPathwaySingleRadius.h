@@ -34,19 +34,19 @@
 #define OPENSTEER_POLYLINESEGMENTEDPATHWAYSINGLERADIUS_H
 
 // Include OpenSteer::SegmentedPathway
-#include "OpenSteer/SegmentedPathway.h"
+#include "SegmentedPathway.h"
 
 // Include OpenSteer::PolylineSegmentedPath
-#include "OpenSteer/PolylineSegmentedPath.h"
+#include "PolylineSegmentedPath.h"
 
 // Include OpenSteer::PointToPathAlikeBaseDataExtractionPolicy
-#include "OpenSteer/QueryPathAlikeBaseDataExtractionPolicies.h"
+#include "QueryPathAlikeBaseDataExtractionPolicies.h"
 
 // Include OpenSteer::Vec3
-#include "OpenSteer/Vec3.h"
+#include "Vec3.h"
 
 // Include OpenSteer::distance
-#include "OpenSteer/Vec3Utilities.h"
+#include "Vec3Utilities.h"
 
 
 

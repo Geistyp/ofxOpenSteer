@@ -47,10 +47,10 @@
 #define OPENSTEER_STEERLIBRARY_H
 
 
-#include "OpenSteer/AbstractVehicle.h"
-#include "OpenSteer/Pathway.h"
-#include "OpenSteer/Obstacle.h"
-#include "OpenSteer/Utilities.h"
+#include "AbstractVehicle.h"
+#include "Pathway.h"
+#include "Obstacle.h"
+#include "Utilities.h"
 
 // Include OpenSteer::Color, OpenSteer::gBlack, ...
 #include "Color.h"
@@ -1029,7 +1029,7 @@ steerForPursuit (const AbstractVehicle& quarry,
     const Vec3 target = quarry.predictFuturePosition (etl);
 
     // annotation
-    annotationLine (position(),
+    this->annotationLine (position(),
                     target,
                     gaudyPursuitAnnotation ? color : gGray40);
 

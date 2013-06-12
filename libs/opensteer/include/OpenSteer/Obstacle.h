@@ -41,9 +41,9 @@
 #define OPENSTEER_OBSTACLE_H
 
 
-#include "OpenSteer/Vec3.h"
-#include "OpenSteer/LocalSpace.h"
-#include "OpenSteer/AbstractVehicle.h"
+#include "Vec3.h"
+#include "LocalSpace.h"
+#include "AbstractVehicle.h"
 
 
 namespace OpenSteer {

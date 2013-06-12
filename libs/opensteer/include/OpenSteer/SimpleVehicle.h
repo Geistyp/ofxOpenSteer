@@ -64,9 +64,9 @@
 #define OPENSTEER_SIMPLEVEHICLE_H
 
 
-#include "OpenSteer/AbstractVehicle.h"
-#include "OpenSteer/SteerLibrary.h"
-#include "OpenSteer/Annotation.h"
+#include "AbstractVehicle.h"
+#include "SteerLibrary.h"
+#include "Annotation.h"
 
 
 namespace OpenSteer {

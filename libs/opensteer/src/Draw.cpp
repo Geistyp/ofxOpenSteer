@@ -47,7 +47,7 @@
 //
 // ----------------------------------------------------------------------------
 
-#include "OpenSteer/Draw.h"
+#include "Draw.h"
 
 #include <iomanip>
 #include <sstream>
@@ -75,10 +75,10 @@
 #endif
 
 
-#include "OpenSteer/Vec3.h"
+#include "Vec3.h"
 
 // To include OpenSteer::round.
-#include "OpenSteer/Utilities.h"
+#include "Utilities.h"
 
 // ----------------------------------------------------------------------------
 

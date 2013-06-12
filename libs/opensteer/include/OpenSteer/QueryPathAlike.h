@@ -40,16 +40,16 @@
 
 
 // Include OpenSteer::Vec3
-#include "OpenSteer/Vec3.h"
+#include "Vec3.h"
 
 // Include OpenSteer::distance
-#include "OpenSteer/Vec3Utilities.h"
+#include "Vec3Utilities.h"
 
 // Include OpenSteer::clamp, OpenSteer::modulo
-#include "OpenSteer/Utilities.h"
+#include "Utilities.h"
 
 // Include OpenSteer::PointToPathAlikeBaseDataExtractionPolicy, OpenSteer::DistanceToPathAlikeBaseDataExtractionPolicy
-#include "OpenSteer/QueryPathAlikeBaseDataExtractionPolicies.h"
+#include "QueryPathAlikeBaseDataExtractionPolicies.h"
 
 #ifdef _MSC_VER
 #undef min

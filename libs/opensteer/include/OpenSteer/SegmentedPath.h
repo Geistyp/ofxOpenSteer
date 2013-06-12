@@ -33,10 +33,10 @@
 #define OPENSTEER_SEGMENTEDPATH_H
 
 // Include OpenSteer::Path
-#include "OpenSteer/Path.h"
+#include "Path.h"
 
 // Include OpenSteer::size_t
-#include "OpenSteer/StandardTypes.h"
+#include "StandardTypes.h"
 
 namespace OpenSteer {
     

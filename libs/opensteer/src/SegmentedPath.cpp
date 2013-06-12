@@ -25,7 +25,7 @@
  *
  * @author Bjoern Knafla <bknafla@uni-kassel.de>
  */
-#include "OpenSteer/SegmentedPath.h"
+#include "SegmentedPath.h"
 
 OpenSteer::SegmentedPath::~SegmentedPath()
 {

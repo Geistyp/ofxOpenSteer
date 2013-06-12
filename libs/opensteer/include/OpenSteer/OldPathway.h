@@ -42,7 +42,7 @@
 #define OPENSTEER_OLD_PATHWAY_H
 
 
-#include "OpenSteer/Vec3.h"
+#include "Vec3.h"
 
 
 namespace OpenSteer {

@@ -54,7 +54,7 @@
 #ifndef OPENSTEER_CLOCK_H
 #define OPENSTEER_CLOCK_H
 
-#include "OpenSteer/Utilities.h"
+#include "Utilities.h"
 
 #if defined (_XBOX)
 	#include <xtl.h>
