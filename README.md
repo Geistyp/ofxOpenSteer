@@ -3,7 +3,9 @@ Openframeworks lightweight wrapper for the opensource steering behaviors library
 
 This addon was started by Philip Whitfield and extended by Paulo Barcelos.
 
-This is quite an early stage so, for now, no instructions in here (the example app is quite easy to understand), but a few screen shots of the sample simulations:
+This is just a fork with fixed includes for the library that wouldn't work with removing 'OpenSteer/' string in each one.
+
+
 
 ### Flocking ###
 ![Flocking](https://github.com/paulobarcelos/ofxOpenSteer/raw/master/screenshots/Flocking.png)
