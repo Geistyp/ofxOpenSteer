@@ -2,9 +2,9 @@
 Openframeworks lightweight wrapper for the opensource steering behaviors library [OpenSteer](http://opensteer.sourceforge.net/).
 
 This addon was started by Philip Whitfield and extended by Paulo Barcelos.
-
 This is just a fork with fixed includes for the library that wouldn't work with removing 'OpenSteer/' string in each one.
 
+The official OpenSteer sources are [here](http://opensteer.sourceforge.net)
 
 
 ### Flocking ###
