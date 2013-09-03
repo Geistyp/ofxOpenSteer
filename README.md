@@ -1,3 +1,6 @@
+# iOS version #
+This is a iOS version of ofxOpenSteer, use openFrameWorks 0.8.0. 
+
 # ofxOpenSteer #
 Openframeworks lightweight wrapper for the opensource steering behaviors library [OpenSteer](http://opensteer.sourceforge.net/).
 
