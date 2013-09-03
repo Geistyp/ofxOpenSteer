@@ -58,11 +58,24 @@
 // XXX In Mac OS X these headers are located in a different directory.
 // XXX Need to revisit conditionalization on operating system.
 #if __APPLE__ && __MACH__
+/*
     #include <OpenGL/gl.h>   // for Mac OS X
     #include <OpenGL/glu.h>   // for Mac OS X
     #ifndef HAVE_NO_GLUT
         #include <GLUT/glut.h>   // for Mac OS X
     #endif
+ */
+#import <OpenGLES/ES1/gl.h>
+#import <OpenGLES/ES1/glext.h>
+
+#import <OpenGLES/ES2/gl.h>
+#import <OpenGLES/ES2/glext.h>
+
+//#include "glu.h"
+#import <glu.h>
+
+
+#define TARGET_LITTLE_ENDIAN		// arm cpu
 #else
     #ifdef _MSC_VER
         #include <windows.h>
@@ -90,9 +103,19 @@ namespace {
     // ------------------------------------------------------------------------
     // emit an OpenGL vertex based on a Vec3
     
-    inline void iglVertexVec3 (const OpenSteer::Vec3& v)
+    /*inline void iglVertexVec3 (const OpenSteer::Vec3& v)
     {
         glVertex3f (v.x, v.y, v.z);
+    }*/
+    inline void DrawVC(GLenum type, GLfloat *v, int num){
+
+        glEnableClientState(GL_VERTEX_ARRAY);
+        
+        glVertexPointer(3, GL_FLOAT, 0, v);
+        
+        glDrawArrays(type, 0, num);
+        
+        glDisableClientState(GL_VERTEX_ARRAY);
     }
 
     // ------------------------------------------------------------------------
@@ -116,7 +139,7 @@ namespace {
         case GL_STACK_UNDERFLOW:   std::cerr << "GL_STACK_UNDERFLOW";   break;
         case GL_OUT_OF_MEMORY:     std::cerr << "GL_OUT_OF_MEMORY";     break;
     #ifndef _WIN32
-        case GL_TABLE_TOO_LARGE:   std::cerr << "GL_TABLE_TOO_LARGE";   break;
+        //case GL_TABLE_TOO_LARGE:   std::cerr << "GL_TABLE_TOO_LARGE";   break;
     #endif
         }
         if (locationDescription) std::cerr << " in " << locationDescription;
@@ -134,11 +157,15 @@ namespace {
                            const OpenSteer::Color& color)
     {
         OpenSteer::warnIfInUpdatePhase ("iDrawLine");
-        glColor3f (color.r(), color.g(), color.b());
-        glBegin (GL_LINES);
-        glVertexVec3 (startPoint);
-        glVertexVec3 (endPoint);
-        glEnd ();
+        
+        GLfloat v[] = { startPoint.x, startPoint.y, startPoint.z,
+                        endPoint.x, endPoint.y, endPoint.z };
+        glColor4f (color.r(), color.g(), color.b(), 1.0);
+        //glBegin (GL_LINES);
+        //glVertexVec3 (startPoint);
+        //glVertexVec3 (endPoint);
+        //glEnd ();
+        DrawVC(GL_LINES, v, 2);
     }
 
     // ----------------------------------------------------------------------------
@@ -150,6 +177,13 @@ namespace {
                                const OpenSteer::Color& color)
     {
         OpenSteer::warnIfInUpdatePhase ("iDrawTriangle");
+        
+        GLfloat vex[] = { a.x, a.y, a.z, b.x, b.y, b.z, c.x, c.y, c.z };
+        
+        /*
+        glEnableClientState(GL_COLOR_ARRAY);
+        glEnableClientState(GL_VERTEX_ARRAY);
+        
         glColor3f (color.r(), color.g(), color.b());
         glBegin (GL_TRIANGLES);
         {
@@ -158,6 +192,10 @@ namespace {
             OpenSteer::glVertexVec3 (c);
         }
         glEnd ();
+         */
+        glColor4f (color.r(), color.g(), color.b(), 1.0f);
+        DrawVC(GL_TRIANGLES, vex, 3);
+        
     }
 
 
@@ -171,7 +209,9 @@ namespace {
                                  const OpenSteer::Color& color)
     {
         OpenSteer::warnIfInUpdatePhase ("iDrawQuadrangle");
-        glColor3f (color.r(), color.g(), color.b());
+        
+        GLfloat vex[] = { a.x, a.y, a.z, b.x, b.y, b.z, c.x, c.y, c.z, a.x, a.y, a.z, d.x, d.y, d.z, c.x, c.y, c.z };
+        /*
         glBegin (GL_QUADS);
         {
             OpenSteer::glVertexVec3 (a);
@@ -180,6 +220,9 @@ namespace {
             OpenSteer::glVertexVec3 (d);
         }
         glEnd ();
+         */
+        glColor4f(color.r(), color.b(), color.g(), 1.0f);
+        DrawVC(GL_TRIANGLES, vex, 6);
     }
 
     // ------------------------------------------------------------------------
@@ -188,14 +231,15 @@ namespace {
     
     inline void beginDoubleSidedDrawing (void)
     {
-        glPushAttrib (GL_ENABLE_BIT);
+        //glPushAttrib (GL_ENABLE_BIT);
         glDisable (GL_CULL_FACE);
     }
 
 
     inline void endDoubleSidedDrawing (void)
     {
-        glPopAttrib ();
+        //glPopAttrib ();
+        glEnable(GL_CULL_FACE);
     }
 
     inline GLint begin2dDrawing (float w, float h)
@@ -210,7 +254,7 @@ namespace {
         glLoadIdentity ();
 
         // set up orthogonal projection onto window's screen space
-        glOrtho (0.0f, w, 0.0f, h, -1.0f, 1.0f);
+        glOrthof (0.0f, w, 0.0f, h, -1.0f, 1.0f);
 
         // clear model transform
         glMatrixMode (GL_MODELVIEW);
@@ -236,13 +280,13 @@ namespace {
 }   // end anonymous namespace
 
 
-
+/*
 void 
 OpenSteer::glVertexVec3 (const Vec3& v)
 {
     iglVertexVec3 (v);
 }
-
+*/
 
 
 
@@ -289,17 +333,22 @@ OpenSteer::drawLineAlpha (const Vec3& startPoint,
 {
     warnIfInUpdatePhase ("drawLineAlpha");
     glColor4f (color.r(), color.g(), color.b(), alpha);
+    /*
     glBegin (GL_LINES);
     OpenSteer::glVertexVec3 (startPoint);
     OpenSteer::glVertexVec3 (endPoint);
     glEnd ();
+    */
+    GLfloat v[] = { startPoint.x, startPoint.y, startPoint.z,
+        endPoint.x, endPoint.y, endPoint.z };
+    DrawVC(GL_LINES, v, 2);
 }
 
 
 
 
 
-void 
+void
 OpenSteer::drawTriangle (const Vec3& a,
                          const Vec3& b,
                          const Vec3& c,
@@ -392,31 +441,50 @@ OpenSteer::drawCircleOrDisk (const float radius,
     const float step = (2 * OPENSTEER_M_PI) / segments;
 
     // set drawing color
-    glColor3f (color.r(), color.g(), color.b());
+    glColor4f (color.r(), color.g(), color.b(), 1.0f);
 
     // begin drawing a triangle fan (for disk) or line loop (for circle)
-    glBegin (filled ? GL_TRIANGLE_FAN : GL_LINE_LOOP);
+    GLenum  filltype = filled ? GL_TRIANGLE_FAN : GL_LINE_LOOP;
+    //glBegin (filled ? GL_TRIANGLE_FAN : GL_LINE_LOOP);
+    
+    const int vertexCount = filled ? segments+1 : segments;
+    
+    GLfloat v[(vertexCount + 1)*3];
 
     // for the filled case, first emit the center point
-    if (filled) iglVertexVec3 (in3d ? ls.position() : center);
+    if (filled) //iglVertexVec3 (in3d ? ls.position() : center);
+    {
+        Vec3 centerpoint = in3d ? ls.position() : center;
+        v[0] = centerpoint.x; v[1] = centerpoint.y; v[2] = centerpoint.z;
+    }
 
     // rotate p around the circle in "segments" steps
     float sin=0, cos=0;
-    const int vertexCount = filled ? segments+1 : segments;
+    
     for (int i = 0; i < vertexCount; i++)
     {
         // emit next point on circle, either in 3d (globalized out
         // of the local space), or in 2d (offset from the center)
+        /*
         iglVertexVec3 (in3d ?
                            ls.globalizePosition (pointOnCircle) :
-                           (Vec3) (pointOnCircle + center));
+                           (Vec3) (pointOnCircle + center));*/
+        Vec3 vex = in3d ?
+            ls.globalizePosition (pointOnCircle) :
+            (Vec3) (pointOnCircle + center);
+        
+        int index = (i+1)*3;
+        v[index+0] = vex.x; v[index+1] = vex.y; v[index+2] = vex.z;
 
         // rotate point one more step around circle
         pointOnCircle = pointOnCircle.rotateAboutGlobalY (step, sin, cos);
     }
 
     // close drawing operation
-    glEnd ();
+    //glEnd ();
+    
+    DrawVC( filltype, v, vertexCount+1);
+    
     if (filled) endDoubleSidedDrawing ();
 }
 
@@ -484,24 +552,31 @@ OpenSteer::drawXZArc (const Vec3& start,
     const float step = arcAngle / segments;
 
     // set drawing color
-    glColor3f (color.r(), color.g(), color.b());
+    glColor4f (color.r(), color.g(), color.b(), 1.0);
 
     // begin drawing a series of connected line segments
-    glBegin (GL_LINE_STRIP);
+    //glBegin (GL_LINE_STRIP);
+    
+    GLfloat v[segments*3];
 
     // draw each segment along arc
     float sin=0, cos=0;
     for (int i = 0; i < segments; i++)
     {
         // emit next point on arc
-        iglVertexVec3 (spoke + center);
+        //iglVertexVec3 (spoke + center);
+        Vec3 tp = spoke + center;
+        int k = i*3;
+        v[k+0] = tp.x; v[k+1] = tp.y; v[k+2] = tp.z;
 
         // rotate point to next step around circle
         spoke = spoke.rotateAboutGlobalY (step, sin, cos);
     }
 
     // close drawing operation
-    glEnd ();
+    //glEnd ();
+    
+    DrawVC(GL_LINE_STRIP, v, segments);
 }
 
 
@@ -580,11 +655,11 @@ OpenSteer::drawBasic3dSphericalVehicle (const AbstractVehicle& vehicle,
 
     // draw body
     iDrawTriangle (nose,  side1,  top,    color1);  // top, side 1
-    iDrawTriangle (nose,  top,    side2,  color2);  // top, side 2
-    iDrawTriangle (nose,  bottom, side1,  color3);  // bottom, side 1
-    iDrawTriangle (nose,  side2,  bottom, color4);  // bottom, side 2
-    iDrawTriangle (side1, side2,  top,    color5);  // top back
-    iDrawTriangle (side2, side1,  bottom, color5);  // bottom back
+    //iDrawTriangle (nose,  top,    side2,  color2);  // top, side 2
+    //iDrawTriangle (nose,  bottom, side1,  color3);  // bottom, side 1
+    //iDrawTriangle (nose,  side2,  bottom, color4);  // bottom, side 2
+    //iDrawTriangle (side1, side2,  top,    color5);  // top back
+    //iDrawTriangle (side2, side1,  bottom, color5);  // bottom back
 }
 
 
@@ -708,10 +783,12 @@ OpenSteer::drawXZLineGrid (const float size,
     const float spacing = size / subsquares;
 
     // set grid drawing color
-    glColor3f (color.r(), color.g(), color.b());
+    glColor4f (color.r(), color.g(), color.b(), 1.0f);
+    
+    GLfloat v[ (subsquares+1)*4*3 ];
 
     // draw a square XZ grid with the given size and line count
-    glBegin (GL_LINES);
+    //glBegin (GL_LINES);
     float q = -half;
     for (int i = 0; i < (subsquares + 1); i++)
     {
@@ -720,14 +797,27 @@ OpenSteer::drawXZLineGrid (const float size,
         const Vec3 z1 (+half, 0, q); // along Z parallel to X
         const Vec3 z2 (-half, 0, q);
 
+        /*
         iglVertexVec3 (x1 + center);
         iglVertexVec3 (x2 + center);
         iglVertexVec3 (z1 + center);
         iglVertexVec3 (z2 + center);
+         */
+        Vec3 a = x1 + center;
+        Vec3 b = x2 + center;
+        Vec3 c = z1 + center;
+        Vec3 d = z2 + center;
+        
+        int index = i*4*3;
+        v[index + 0] = a.x; v[index + 1] = a.y; v[index + 2] = a.z;
+        v[index + 3] = b.x; v[index + 4] = b.y; v[index + 5] = b.z;
+        v[index + 6] = c.x; v[index + 7] = c.y; v[index + 8] = c.z;
+        v[index + 9] = d.x; v[index + 10] = d.y; v[index + 11] = d.z;
 
         q += spacing;
     }
-    glEnd ();
+    //glEnd ();
+    DrawVC(GL_LINES, v, (subsquares+1)*4);
 }
 
 
@@ -841,9 +931,29 @@ OpenSteer::drawCameraLookAt (const Vec3& cameraPosition,
 
     // use LookAt from OpenGL Utilities
     glLoadIdentity ();
+    /*
     gluLookAt (cameraPosition.x, cameraPosition.y, cameraPosition.z,
                pointToLookAt.x,  pointToLookAt.y,  pointToLookAt.z,
                up.x,             up.y,             up.z);
+     */
+    Vec3 E = cameraPosition;
+    Vec3 L = pointToLookAt - cameraPosition;
+    L = L.normalize();
+    Vec3 N = up.normalize();
+    Vec3 S;
+    S.cross(L, N);
+    S = S.normalize();
+    Vec3 U;
+    U.cross(S, L);
+    
+    GLfloat m[16];
+    m[0] = S.x; m[1] = S.y; m[2] = S.z; m[3] = 0;
+    m[4] = U.x; m[5] = U.y; m[6] = U.z; m[7] = 0;
+    m[8] = -L.x; m[9] = -L.y; m[10] = -L.z; m[11] = 0;
+    m[12] = -E.x; m[13] = -E.y; m[14] = -E.z; m[15] = 1.0;
+    
+    glMultMatrixf(m);
+    
 }
 
 
@@ -926,15 +1036,20 @@ OpenSteer::directionFromCameraToScreenPosition (int x, int y, int h)
 {
     // Get window height, viewport, modelview and projection matrices
     GLint vp[4];
-    GLdouble mMat[16], pMat[16];
+    GLfloat mMatf[16], pMatf[16];
     glGetIntegerv (GL_VIEWPORT, vp);
-    glGetDoublev (GL_MODELVIEW_MATRIX, mMat);
-    glGetDoublev (GL_PROJECTION_MATRIX, pMat);
+    glGetFloatv (GL_MODELVIEW_MATRIX, mMatf);
+    glGetFloatv (GL_PROJECTION_MATRIX, pMatf);
     GLdouble un0x, un0y, un0z, un1x, un1y, un1z;
+    
+    GLdouble mMatd[16], pMatd[16];
+    for(int i = 0; i < 16; i++ ) mMatd[i] = mMatf[i];
+    for(int i = 0; i < 16; i++ ) pMatd[i] = pMatd[i];
+    
 
     // Unproject mouse position at near and far clipping planes
-    gluUnProject (x, h-y, 0, mMat, pMat, vp, &un0x, &un0y, &un0z);
-    gluUnProject (x, h-y, 1, mMat, pMat, vp, &un1x, &un1y, &un1z);
+    gluUnProject (x, h-y, 0, mMatd, pMatd, vp, &un0x, &un0y, &un0z);
+    gluUnProject (x, h-y, 1, mMatd, pMatd, vp, &un1x, &un1y, &un1z);
 
     // "direction" is the normalized difference between these far and near
     // unprojected points.  Its parallel to the "eye-mouse" selection line.
@@ -1496,22 +1611,25 @@ OpenSteer::drawAllDeferredCirclesOrDisks (void)
 // }
 
 
+// :( seems OpenGLES not support glRasterPos , so comment all this func use
+// this means this function is empty , don't use this.
 void 
 OpenSteer::draw2dTextAt3dLocation (const char& text,
                                    const Vec3& location,
                                    const Color& color, float w, float h)
 {
+    
     // XXX NOTE: "it would be nice if" this had a 2d screenspace offset for
     // the origin of the text relative to the screen space projection of
     // the 3d point.
 
     // set text color and raster position
-    glColor3f (color.r(), color.g(), color.b());
-    glRasterPos3f (location.x, location.y, location.z);
+    glColor4f (color.r(), color.g(), color.b(), 1.0f);
+    //glRasterPos3f (location.x, location.y, location.z);
 
     // switch into 2d screen space in case we need to handle a new-line
     GLint rasterPosition[4];
-    glGetIntegerv (GL_CURRENT_RASTER_POSITION, rasterPosition);
+    //glGetIntegerv (GL_CURRENT_RASTER_POSITION, rasterPosition);
     const GLint originalMatrixMode = begin2dDrawing (w, h);
 
     //xxx uncommenting this causes the "2d" version to print the wrong thing
@@ -1528,7 +1646,7 @@ OpenSteer::draw2dTextAt3dLocation (const char& text,
             lines++;
             const int fontHeight = 15; // for GLUT_BITMAP_9_BY_15
             const int vOffset = lines * (fontHeight + 1);
-            glRasterPos2i (rasterPosition[0], rasterPosition[1] - vOffset);
+            //glRasterPos2i (rasterPosition[0], rasterPosition[1] - vOffset);
         }
         else
         {

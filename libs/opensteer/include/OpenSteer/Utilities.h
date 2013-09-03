@@ -53,7 +53,8 @@
 
 // ----------------------------------------------------------------------------
 // For the sake of Windows, apparently this is a "Linux/Unix thing"
-
+#define HAVE_NO_GLUT
+#define NOT_OPENSTEERDEMO
 
 #ifndef OPENSTEER_M_PI
 #define OPENSTEER_M_PI 3.14159265358979323846f

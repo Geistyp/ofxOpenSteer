@@ -201,8 +201,13 @@ namespace OpenSteer {
                                      const bool filled,
                                      const bool in3d) const;
 
-        // ------------------------------------------------------------------------
-    private:
+      
+    
+    // ------------------------------------------------------------------------
+    // TODO
+    // use this in ofxOpenSteerVehicle
+        
+    //private:
 
         // trails
         int trailVertexCount;       // number of vertices in array (ring buffer)
@@ -400,7 +405,7 @@ OpenSteer::AnnotationMixin<Super>::annotationLine (const Vec3& startPoint,
 }
 #else
 template<class Super> void OpenSteer::AnnotationMixin<Super>::annotationLine
- (const Vec3&, const Vec3&, const Vec3&) const {}
+(const Vec3&, const Vec3&, const Color&) const {}
 #endif // NOT_OPENSTEERDEMO
 
 
@@ -440,7 +445,7 @@ OpenSteer::AnnotationMixin<Super>::annotationCircleOrDisk (const float radius,
 #else
 template<class Super>
 void OpenSteer::AnnotationMixin<Super>::annotationCircleOrDisk
-(const float, const Vec3&, const Vec3&, const Vec3&, const int,
+(const float, const Vec3&, const Vec3&, const Color&, const int,
  const bool, const bool) const {}
 #endif // NOT_OPENSTEERDEMO
 

@@ -3,6 +3,13 @@
 using namespace OpenSteer;
 using namespace ofxOpenSteer;
 
+// we not use OpenSteerDemo.cpp
+// 2 extern define here
+namespace OpenSteer {
+    bool updatePhaseActive = false;
+    bool drawPhaseActive = false;
+}
+
 ofxOpenSteerPlugin::ofxOpenSteerPlugin(){
     setup();
 }
@@ -26,6 +33,7 @@ void ofxOpenSteerPlugin::draw(){
 	drawPhaseActive = true; //XXX ideally should be moved to main app's events, kepping it here so app can be cleaner. it's only safe while single threaded
 	for (VehicleIterator i = vehicles.begin(); i != vehicles.end(); i++) {
 		(*i)->draw();
+        //ofCircle((*i)->getPosition(), 1);
 	}
 	drawPhaseActive = false; //XXX ideally should be moved to main app's events, kepping it here so app can be cleaner. it's only safe while single threaded
 }
