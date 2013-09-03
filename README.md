@@ -1,6 +1,14 @@
 # iOS version #
 This is a iOS version of ofxOpenSteer, use openFrameWorks 0.8.0. 
 
+Change a lot from origin code.
+
+1. Remove glut
+2. Use more oF draw function( openSteer/Draw.h is useless now )
+
+WIP:
+Add more performance to iOS ( Fraps is low in this version )
+
 # ofxOpenSteer #
 Openframeworks lightweight wrapper for the opensource steering behaviors library [OpenSteer](http://opensteer.sourceforge.net/).
 
